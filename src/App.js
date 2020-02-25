@@ -1,26 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInput: ''
+    }
+  }
 
-export default App;
+  render() {
+    return (
+      <div className="text-center">
+        <header className="bg-gray-600 m-6 p-6 rounded shadow-lg hover:bg-red-600">
+          <img
+            src={logo}
+            className="h-32 w-32 rounded-full mx-auto App-logo"
+            alt="logo"
+          />
+          <h1 className="text-white text-3xl">Welcome to React</h1>
+        </header>
+        <p className="text-base">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+      </div>
+    );
+  }
+}

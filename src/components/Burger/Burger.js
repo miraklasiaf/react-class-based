@@ -15,12 +15,12 @@ const burger = (props) => {
         }, [])
 
     if(formatIngredients.length === 0){
-        formatIngredients = <p>Start adding ingredients!</p>
+        formatIngredients = <p className="text-base">Start add some ingredients!</p>
     }
     console.log(formatIngredients)
 
     return (
-      <div className="Burger">
+      <div className="w-64 h-56 mx-auto text-center font-bold text-lg overflow-y-auto">
         <Ingredient type="bread-top" />
         {formatIngredients}
         <Ingredient type="bread-bottom" />

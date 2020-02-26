@@ -6,11 +6,9 @@ import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder'
 export default class App extends Component {
   render() {
     return (
-      <div className="text-center">
-        <Layout>
-          <BurgerBuilder />
-        </Layout>
-      </div>
+      <Layout>
+        <BurgerBuilder />
+      </Layout>
     );
   }
 }

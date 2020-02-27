@@ -1,8 +1,8 @@
 import React from 'react'
-import './Backdrop.css'
+import styles from './Backdrop.module.css'
 
 export default function Backdrop(props) {
     return (
-        props.isShow ? <div className="Backdrop" onClick={props.clicked} ></div> : null
+        props.isShow ? <div className={styles.Backdrop} onClick={props.clicked}></div> : null
     )
 }

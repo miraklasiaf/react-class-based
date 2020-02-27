@@ -1,6 +1,6 @@
 import React from 'react'
 import Ingredient from './Ingredient/Ingredient'
-import './Burger.css'
+import styles from './Burger.module.css'
 
 const burger = (props) => {
     // Transform ingredient object to array
@@ -17,10 +17,9 @@ const burger = (props) => {
     if(formatIngredients.length === 0){
         formatIngredients = <p className="text-base">Start add some ingredients!</p>
     }
-    console.log(formatIngredients)
 
     return (
-      <div className="w-64 h-56 mx-auto text-center font-bold text-lg overflow-y-auto">
+      <div className={styles.Burger}>
         <Ingredient type="bread-top" />
         {formatIngredients}
         <Ingredient type="bread-bottom" />

@@ -1,18 +1,19 @@
 import React from 'react'
+import styles from './Control.module.css'
 
 const control = (props) => {
     return (
-      <div className="flex justify-center">
-        <div className="w-24 p-3 text-bold text-black">{props.label}</div>
+      <div className={styles.Control}>
+        <div className={styles.Label}>{props.label}</div>
         <button
-          className="w-16 mr-3 mb-3 bg-red-700 p-3 outline-none rounded-lg hover:bg-blue-600 text-white"
+          className={styles.Less}
           onClick={props.removed}
           disabled={props.disabled}
         >
           Less
         </button>
         <button
-          className="w-16 mb-3 bg-yellow-700 p-3 outline-none rounded-lg hover:bg-blue-600 text-white"
+          className={styles.More}
           onClick={props.added}
         >
           More

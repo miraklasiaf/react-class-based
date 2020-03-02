@@ -13,7 +13,7 @@ export default function SideDrawer(props) {
     }
 
     return (
-        <Auxiliary>
+        <Auxiliary className="mt-16">
             <Backdrop isShow={props.open} clicked={props.closed} />
             <div className={classes.join(' ')}>
                 <Logo />

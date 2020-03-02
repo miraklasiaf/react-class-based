@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import Auxiliary from './Auxiliary'
-import styles from './Layout.module.css'
 import Toolbar from '../components/Navigation/Toolbar'
 import SideDrawer from '../components/Navigation/SideDrawer/SideDrawer'
 
@@ -25,13 +24,13 @@ export default class Layout extends Component {
 
   render() {
     return (
-      <Auxiliary>
+      <Auxiliary className="flex flex-col items-center">
         <Toolbar toggleClicked={this.handleToggle} />
         <SideDrawer
           open={this.state.showSideDrawer}
-          closed={this.handleSideDrawerClose} 
+          closed={this.handleSideDrawerClose}
         />
-        <main className={styles.Content}>
+        <main className="w-full flex flex-col items-center mt-16">
           {this.props.children}
         </main>
       </Auxiliary>

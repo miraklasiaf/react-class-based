@@ -24,13 +24,13 @@ export default class Layout extends Component {
 
   render() {
     return (
-      <Auxiliary className="flex flex-col items-center">
+      <Auxiliary className="flex flex-col items-center w-full">
         <Toolbar toggleClicked={this.handleToggle} />
         <SideDrawer
           open={this.state.showSideDrawer}
           closed={this.handleSideDrawerClose}
         />
-        <main className="w-full flex flex-col items-center mt-16">
+        <main className="w-full flex flex-col items-center mt-8">
           {this.props.children}
         </main>
       </Auxiliary>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import { navigate } from '@reach/router'
 import Auxiliary from '../hoc/Auxiliary'
 import Burger from '../components/Burger/Burger'
 import Builder from '../components/Burger/Builder/Builder'
 import Modal from '../components/UI/Modal/Modal'
-import Order from '../components/Order/Order'
+import OrderSummary from '../components/Burger/OrderSummary'
 import axios from '../axios-orders'
 import Spinner from '../components/UI/Spinner/Spinner'
 import error from '../hoc/Error'
@@ -16,14 +17,18 @@ const INGREDIENT_PRICES = {
 }
 
 class BurgerMaker extends Component {
-    state = {
-        ingredients: null,
-        totalPrice: 5000,
-        isPurchase: false,
-        isPurchasing: false,
-        loading: false,
-        error: false
+    constructor(props){
+        super(props);
+        this.state = {
+            ingredients: null,
+            totalPrice: 5000,
+            isPurchase: false,
+            isPurchasing: false,
+            loading: false,
+            error: false
+        }
     }
+
 
     componentDidMount() {
         axios.get("https://burger-junkie.firebaseio.com/ingredients.json")
@@ -41,37 +46,12 @@ class BurgerMaker extends Component {
 
     handleContinue = () => {
         // alert('Selamat makan')
-        this.setState({
-            loading: true
+        navigate("/checkout", { 
+            state: {
+                ingredients: this.state.ingredients,
+                price: this.state.totalPrice
+            } 
         })
-
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Faisal Karim',
-                address: {
-                    street: 'Jalan',
-                    zipCode: '29428',
-                    country: 'Germany'
-                },
-                email: 'faisalkarim96@gmail.com'
-            },
-            deliveryMethod: 'Fastest'
-        }
-        axios.post('orders.json', order)
-            .then(res => {
-                this.setState({
-                    loading: false,
-                    isPurchasing: false
-                })
-            })
-            .catch(err => {
-                this.setState({
-                    loading: false,
-                    isPurchasing: false
-                })
-            })
     }
 
     handleCancel = () => {
@@ -170,7 +150,7 @@ class BurgerMaker extends Component {
               </Auxiliary>
             );
             order = (
-                <Order
+                <OrderSummary
                     ingredients={this.state.ingredients}
                     price={this.state.totalPrice}
                     cancel={this.handleCancel}

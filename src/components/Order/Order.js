@@ -1,37 +1,25 @@
-import React, {Component} from 'react'
-import Auxiliary from '../../hoc/Auxiliary'
-import Button from '../UI/Button/Button'
+import React from 'react'
 
-export default class Order extends Component {
-    // Can revert back to functional component
-    componentDidUpdate() {
-        console.log('Order Component')
+export default function Order(props) {
+    const ingredients = []
+
+    for (let ingredientName in props.ingredients){
+        ingredients.push({
+            name: ingredientName,
+            amount: props.ingredients[ingredientName]
+        });
     }
 
-    render() {
-        const ingredientSummary = Object.keys(this.props.ingredients)
-            .map(igKey => {
-                return (
-                    <li key={igKey}>
-                        <span className="capitalize">{igKey}</span>: {this.props.ingredients[igKey]}
-                    </li>
-                )
-            })
-
+    const ingredientOutput = ingredients.map(ig => {
         return (
-            <Auxiliary>
-                <h3 className="font-bold mb-2">Your Order</h3>
-                <p className="mb-2">A delicious burger with the following ingredients</p>
-                <ul>
-                    {ingredientSummary}
-                </ul>
-                <p className="font-bold mt-2">Total Price: Rp {this.props.price} </p>
-                <div className="text-center mt-5">
-                    <p>Continue to Checkout?</p>
-                    <Button clicked={this.props.cancel} btnType="Danger">CANCEL</Button>
-                    <Button clicked={this.props.continue} btnType="Success">CONTINUE</Button>
-                </div>
-            </Auxiliary>
+            <span key={ig.name} className="capitalize inline-block mx-1 border-b">{ig.name}({ig.amount})</span>
         )
-    }
+    })
+
+    return (
+        <div className="w-1/2 p-8 text-gray-700 flex flex-col items-center mt-5 hover:bg-gray-400 border-b">
+            <p>Ingredients: {ingredientOutput} </p>
+            <p>Price: <strong>Rp. {props.price}</strong></p>
+        </div>
+    )
 }

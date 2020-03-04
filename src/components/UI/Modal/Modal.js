@@ -9,9 +9,9 @@ export default class Modal extends Component {
         nextProps.children !== this.props.children
     }
 
-    componentDidUpdate() {
-        console.log('Modal re-render')
-    }
+    // componentDidUpdate() {
+    //     console.log('Modal re-render')
+    // }
 
     render() {
         return (

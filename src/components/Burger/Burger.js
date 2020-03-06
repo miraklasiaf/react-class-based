@@ -18,11 +18,13 @@ const burger = (props) => {
     }
 
     return (
-      <div className="w-full h-64 overflow-scroll text-center font-bold text-lg">
-        <Ingredient type="bread-top" />
-        {formatIngredients}
-        <Ingredient type="bread-bottom" />
-      </div>
+        <div className="w-full flex flex-col items-center">
+            <div className="w-1/3 h-64 overflow-scroll text-center font-bold text-lg">
+                <Ingredient type="bread-top" />
+                {formatIngredients}
+                <Ingredient type="bread-bottom" />
+            </div>
+        </div>
     );
 }
 

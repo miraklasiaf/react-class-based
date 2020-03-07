@@ -3,133 +3,122 @@ import Button from '../components/UI/Button/Button'
 import axios from '../axios-orders'
 import Spinner from '../components/UI/Spinner/Spinner'
 import Input from '../components/UI/Form/Input'
+import { connect } from 'react-redux'
 
-export default class ContactData extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            orderForm: {
-                name: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'text',
-                        placeholder: 'Your Name'
-                    },
-                    value: '',
-                    validation: {
-                        required: true
-                    },
-                    valid: false,
-                    clicked: false
+class ContactData extends Component {
+    state = {
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your Name'
                 },
-                street: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'text',
-                        placeholder: 'Street'
-                    },
-                    value: '',
-                    validation: {
-                        required: true
-                    },
-                    valid: false,
-                    clicked: false
+                value: '',
+                validation: {
+                    required: true
                 },
-                zipCode: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'text',
-                        placeholder: 'ZIP Code'
-                    },
-                    value: '',
-                    validation: {
-                        required: true,
-                        minLength: 5,
-                        maxLength: 5
-                    },
-                    valid: false,
-                    clicked: false
-                },
-                country: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'text',
-                        placeholder: 'Country'
-                    },
-                    value: '',
-                    validation: {
-                        required: true
-                    },
-                    valid: false,
-                    clicked: false
-                },
-                email: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'email',
-                        placeholder: 'Email'
-                    },
-                    value: '',
-                    validation: {
-                        required: true
-                    },
-                    valid: false,
-                    clicked: false
-                },
-                deliveryMethod: {
-                    elementType: 'select',
-                    elementConfig: {
-                        options: [
-                            {value: 'fastest', displayValue: 'Fastest'},
-                            {value: 'cheapest', displayValue: 'Cheapest'}
-                        ]
-                    },
-                    value: 'fastest',
-                    validation: {},
-                    valid: true,
-                },
+                valid: false,
+                clicked: false
             },
-            name: '',
-            email: '',
-            address: {
-                street: '',
-                postalCode: ''
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Street'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                clicked: false
             },
-            loading: false,
-            formIsValid: false
-        }
+            zipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'ZIP Code'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5
+                },
+                valid: false,
+                clicked: false
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Country'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                clicked: false
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'Email'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false,
+                clicked: false
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'fastest', displayValue: 'Fastest'},
+                        {value: 'cheapest', displayValue: 'Cheapest'}
+                    ]
+                },
+                value: 'fastest',
+                validation: {},
+                valid: true,
+            },
+        },
+        name: '',
+        email: '',
+        address: {
+            street: '',
+            postalCode: ''
+        },
+        loading: false,
+        formIsValid: false
     }
 
     handleOrder = (event) => {
         event.preventDefault();
-        this.setState({
-            loading: true
-        })
+        this.setState({ loading: true })
 
         const formData = {};
         for(let keyIdentifier in this.state.orderForm){
             formData[keyIdentifier] = this.state.orderForm[keyIdentifier].value
         }
 
-        console.log(formData)
-
         const order = {
-            ingredients: this.props.location.state.ingredients,
-            price: this.props.location.state.price,
+            ingredients: this.props.ingredients,
+            price: this.props.price,
             orderData: formData
         }
         axios.post('orders.json', order)
             .then(res => {
-                console.log(res)
-                this.setState({
-                    loading: false
-                })
+                this.setState({ loading: false })
                 this.props.navigate("/")
             })
             .catch(err => {
-                this.setState({
-                    loading: false
-                })
+                this.setState({ loading: false })
             })
     }
 
@@ -215,3 +204,10 @@ export default class ContactData extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+  ingredients: state.ingredients,
+  price: state.totalPrice
+});
+
+export default connect(mapStateToProps)(ContactData);

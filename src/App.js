@@ -6,6 +6,7 @@ import Checkout from './containers/Checkout'
 import ContactData from './containers/ContactData'
 import NotFound from './components/404'
 import Orders from './containers/Orders'
+import Auth from './containers/Auth'
 import { Router } from '@reach/router'
 
 export default class App extends Component {
@@ -18,6 +19,7 @@ export default class App extends Component {
             <ContactData path="contact-data" />
           </Checkout>
           <Orders path="orders" />
+          <Auth path="auth" />
           <NotFound default />
         </Router> 
       </Layout>

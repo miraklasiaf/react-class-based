@@ -6,6 +6,7 @@ export default function NavItems() {
         <ul className="flex m-0 p-0 list-none items-center h-full">
             <NavItem link="/">Burger Maker</NavItem>
             <NavItem link="/orders">Orders</NavItem>
+            <NavItem link="/auth">Login / Sign Up</NavItem>
         </ul>
     )
 }

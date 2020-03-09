@@ -635,6 +635,11 @@ img {
   padding-bottom: 0.5rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .px-3 {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -643,6 +648,11 @@ img {
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .fixed {
@@ -671,6 +681,10 @@ img {
 
 .text-gray-100 {
   color: #f7fafc;
+}
+
+.text-gray-600 {
+  color: #718096;
 }
 
 .text-gray-700 {
@@ -742,5 +756,9 @@ img {
 
   .sm\:hidden {
     display: none;
+  }
+
+  .sm\:w-1\/3 {
+    width: 33.333333%;
   }
 }

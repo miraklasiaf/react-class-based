@@ -5,34 +5,23 @@ import Burger from '../components/Burger/Burger'
 import Builder from '../components/Burger/Builder/Builder'
 import Modal from '../components/UI/Modal/Modal'
 import OrderSummary from '../components/Burger/OrderSummary'
-import axios from '../axios-orders'
 import Spinner from '../components/UI/Spinner/Spinner'
 import error from '../hoc/Error'
+import axios from '../axios-orders'
 import { connect } from 'react-redux'
-import * as types from '../store/actions'
+import * as action from '../store/actions'
 
 class BurgerMaker extends Component {
-   state = {
-        isPurchasing: false,
-        loading: false,
-        error: false
+    state = {
+        isPurchasing: false
     }
 
     componentDidMount() {
-        // axios.get("https://burger-junkie.firebaseio.com/ingredients.json")
-        //     .then(res => {
-        //         this.setState({
-        //             ingredients: res.data
-        //         })
-        //     })
-        //     .catch(err => {
-        //         this.setState({
-        //             error: true
-        //         })
-        //     })
+        this.props.initIngredient();
     }
 
     handleContinue = () => {
+        this.props.initPurchase();
         navigate("/checkout", { 
             state: {
                 ingredients: this.props.ingredients,
@@ -65,7 +54,7 @@ class BurgerMaker extends Component {
         }
 
         let order = null;
-        let burger = this.state.error ? <p className="text-center">Ingredients cant be loaded</p> : <Spinner />
+        let burger = this.props.error ? <p className="text-center">Ingredients can't be loaded</p> : <Spinner />
 
 
         if(this.props.ingredients){
@@ -91,9 +80,6 @@ class BurgerMaker extends Component {
                 />
             );
         }
-        if(this.state.loading) {
-            order = <Spinner />
-        }
 
         return (
             <Auxiliary>
@@ -107,13 +93,16 @@ class BurgerMaker extends Component {
 }
 
 const mapStateToProps = state => ({
-    ingredients: state.ingredients,
-    price: state.totalPrice
+    ingredients: state.burgerMaker.ingredients,
+    price: state.burgerMaker.totalPrice,
+    error: state.burgerMaker.error
 })
 
 const mapDispatchToProps = dispatch => ({
-    addIngredient: ingredientName => dispatch({type: types.ADD_INGREDIENT, ingredientName: ingredientName}),
-    deleteIngredient: ingredientName => dispatch({type: types.DELETE_INGREDIENT, ingredientName: ingredientName}),
+    addIngredient: ingredientName => dispatch(action.addIngredient(ingredientName)),
+    deleteIngredient: ingredientName => dispatch(action.deleteIngredient(ingredientName)),
+    initIngredient: () => dispatch(action.initIngredient()),
+    initPurchase: () => dispatch(action.initPurchase())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(error(BurgerMaker, axios))

@@ -35,7 +35,12 @@ class BurgerMaker extends Component {
     }
 
     handlePurchasing = () => {
-        this.setState({ isPurchasing: true })
+        if(this.props.isAuth){
+            this.setState({ isPurchasing: true })
+        } else {
+            this.props.authRedirect('/checkout')
+            navigate("/auth")
+        }
     }
 
     handlePurchase = (ingredients) => {
@@ -68,6 +73,7 @@ class BurgerMaker extends Component {
                   price={this.props.price}
                   isPurchase={this.handlePurchase(this.props.ingredients)}
                   ordered={this.handlePurchasing}
+                  isAuth={this.props.isAuth}
                 />
               </Auxiliary>
             );
@@ -95,14 +101,16 @@ class BurgerMaker extends Component {
 const mapStateToProps = state => ({
     ingredients: state.burgerMaker.ingredients,
     price: state.burgerMaker.totalPrice,
-    error: state.burgerMaker.error
+    error: state.burgerMaker.error,
+    isAuth: state.auth.token !== null
 })
 
 const mapDispatchToProps = dispatch => ({
     addIngredient: ingredientName => dispatch(action.addIngredient(ingredientName)),
     deleteIngredient: ingredientName => dispatch(action.deleteIngredient(ingredientName)),
     initIngredient: () => dispatch(action.initIngredient()),
-    initPurchase: () => dispatch(action.initPurchase())
+    initPurchase: () => dispatch(action.initPurchase()),
+    authRedirect: (path) => dispatch(action.authRedirect(path))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(error(BurgerMaker, axios))

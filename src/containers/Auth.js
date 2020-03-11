@@ -4,6 +4,7 @@ import Input from '../components/UI/Form/Input';
 import Button from '../components/UI/Button/Button';
 import * as action from '../store/actions'
 import Spinner from '../components/UI/Spinner/Spinner'
+import { Redirect } from '@reach/router'
 
 class Auth extends Component {
     state = {
@@ -95,6 +96,12 @@ class Auth extends Component {
         });
     }
 
+    componentDidMount() {
+        if(!this.props.building && this.props.authRedirect !== '/'){
+            this.props.authRedirect()
+        }
+    }
+
     render () {
         const formElementsArray = [];
         for (let key in this.state.controls) {
@@ -128,9 +135,15 @@ class Auth extends Component {
             )
         }
 
+        let redirect = null;
+        if(this.props.isAuth){
+            redirect = <Redirect to={this.props.authRedirectPath} noThrow />
+        }
+
         return (
             <div className="flex px-4 py-5 text-center w-full justify-center">
-                <div className="w-full flex flex-col border px-3 py-3 rounded-lg sm:w-1/3">
+                <div className="w-full flex flex-col border px-3 py-3 rounded-lg sm:w-2/3">
+                    {redirect}
                     {errorMessage}
                     <form onSubmit={this.handleSubmit} className="text-gray-100">
                         {form}
@@ -148,13 +161,15 @@ class Auth extends Component {
 
 const mapStateToProps = state => ({
     loading: state.auth.loading,
-    error: state.auth.error
+    error: state.auth.error,
+    isAuth: state.auth.token !== null,
+    building: state.burgerMaker.building,
+    authRedirectPath: state.auth.authRedirectPath
 })
 
-const mapDispatchToProps = dispatch => {
-    return {
-        auth: (email, password, isSignup) => dispatch(action.auth(email, password, isSignup))
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    auth: (email, password, isSignup) => dispatch(action.auth(email, password, isSignup)),
+    authRedirect: () => dispatch(action.authRedirect("/"))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

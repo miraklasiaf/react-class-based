@@ -15,7 +15,6 @@ class Checkout extends Component {
     render() {
         let summary = <Redirect to="/" />
         if(this.props.ingredients){
-            console.log(this.props);
             const purchasedRedirect = this.props.purchased ? <Redirect to="/" /> : null
             summary = (
                 <div>

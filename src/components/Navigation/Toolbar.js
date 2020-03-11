@@ -11,7 +11,7 @@ export default function Toolbar(props) {
                     <DrawerToggle clicked={props.toggleClicked} />
                     <Logo />
                     <nav className="hidden sm:flex">
-                        <NavItems />
+                        <NavItems isAuthenticated={props.isAuth} />
                     </nav>
                 </div>
             </div>

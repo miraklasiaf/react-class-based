@@ -3,7 +3,8 @@ import * as types from '../actions/actionType'
 const initialState = {
     ingredients: null,
     totalPrice: 5000,
-    error: false
+    error: false,
+    building: false
 }
 
 const INGREDIENT_PRICES = {
@@ -37,7 +38,8 @@ const addIngredient = (state, action) => {
       //  literals and variables as the property names.
       [action.ingredientName]: state.ingredients[action.ingredientName] + 1
     },
-    totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+    totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+    building: true
   };
 };
 
@@ -48,7 +50,8 @@ const deleteIngredient = (state, action) => {
       ...state.ingredients,
       [action.ingredientName]: state.ingredients[action.ingredientName] - 1
     },
-    totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+    totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+    building: true
   };
 };
 
@@ -57,7 +60,8 @@ const setIngredient = (state, action) => {
     ...state,
     ingredients: action.ingredients,
     totalPrice: 5000,
-    error: false
+    error: false,
+    building: false
   };
 };
 

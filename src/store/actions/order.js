@@ -4,60 +4,46 @@ import axios from '../../axios-orders'
 /*
  * action creators
  */
-export const purchaseSuccess = (id, orderData) => {
-    return {
-        type: types.PURCHASE_SUCCESS,
-        orderId: id,
-        orderData
-    }
-}
+export const purchaseSuccess = (id, orderData) => ({
+    type: types.PURCHASE_SUCCESS,
+    orderId: id,
+    orderData
+})
 
-export const purchaseFailed = (error) => {
-    return {
-        type: types.PURCHASE_FAILED,
-        error
-    }
-}
+export const purchaseFailed = (error) => ({
+    type: types.PURCHASE_FAILED,
+    error
+})
 
-export const purchaseStart = () => {
-    return {
-        type: types.PURCHASE_START,
-    }
-}
+export const purchaseStart = () => ({
+    type: types.PURCHASE_START,
+})
 
-export const initPurchase = () => {
-    return {
-        type: types.INIT_PURCHASE
-    }
-}
+export const initPurchase = () => ({
+    type: types.INIT_PURCHASE
+})
 
-export const fetchOrdersStart = () => {
-    return {
-      type: types.FETCH_ORDERS_START
-    };
-}
+export const fetchOrdersStart = () => ({
+    type: types.FETCH_ORDERS_START
+})
 
-export const fetchOrdersSuccess = orders => {
-    return {
-        type: types.FETCH_ORDERS_SUCCESS,
-        orders
-    }
-}
+export const fetchOrdersSuccess = orders => ({
+    type: types.FETCH_ORDERS_SUCCESS,
+    orders
+})
 
-export const fetchOrdersFailed = error => {
-  return {
+export const fetchOrdersFailed = error => ({
     type: types.FETCH_ORDERS_FAILED,
     error
-  };
-};
+})
 
 /*
  * Async Task
  */
-export const purchase = (orderData) => {
+export const purchase = (orderData, token) => {
     return dispatch => {
         dispatch(purchaseStart());
-        axios.post("orders.json", orderData)
+        axios.post("orders.json?auth=" + token, orderData)
           .then(res => {
             dispatch(purchaseSuccess(res.data.name, orderData))
           })
@@ -67,10 +53,11 @@ export const purchase = (orderData) => {
     }
 }
 
-export const fetchOrders = () => {
+export const fetchOrders = (token, userId) => {
     return dispatch => {
         dispatch(fetchOrdersStart())
-        axios.get("/orders.json")
+        const query = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"'
+        axios.get('/orders.json' + query)
             .then(res => {
                 const fetchOrders = [];
                 for (let key in res.data) {

@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import Auxiliary from './Auxiliary'
 import Toolbar from '../components/Navigation/Toolbar'
 import SideDrawer from '../components/Navigation/SideDrawer/SideDrawer'
+import { connect } from 'react-redux'
 
-export default class Layout extends Component {
+class Layout extends Component {
   state = {
     showSideDrawer: false
   }
@@ -25,8 +26,9 @@ export default class Layout extends Component {
   render() {
     return (
       <Auxiliary className="flex flex-col items-center w-full">
-        <Toolbar toggleClicked={this.handleToggle} />
+        <Toolbar toggleClicked={this.handleToggle} isAuth={this.props.isAuthenticated} />
         <SideDrawer
+          isAuth={this.props.isAuthenticated}
           open={this.state.showSideDrawer}
           closed={this.handleSideDrawerClose}
         />
@@ -37,3 +39,9 @@ export default class Layout extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.token !== null
+})
+
+export default connect(mapStateToProps)(Layout)

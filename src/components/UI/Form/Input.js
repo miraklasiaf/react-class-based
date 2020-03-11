@@ -12,7 +12,7 @@ export default function Input(props) {
         case 'input': 
             inputElement = <input 
                 className={inputClasses.join(' ')} 
-                {...props.elementConfig} value={props.value} onChange={props.changed}
+                {...props.elementConfig} value={props.value} onChange={props.changed} autoComplete
             />
             break
         case 'textarea':

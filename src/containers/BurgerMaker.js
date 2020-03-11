@@ -11,7 +11,7 @@ import axios from '../axios-orders'
 import { connect } from 'react-redux'
 import * as action from '../store/actions'
 
-class BurgerMaker extends Component {
+export class BurgerMaker extends Component {
     state = {
         isPurchasing: false
     }

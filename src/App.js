@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import './assets/App.css';
 import Layout from './hoc/Layout'
 import BurgerMaker from './containers/BurgerMaker';
-//import Checkout from './containers/Checkout'
 import ContactData from './containers/ContactData'
 import NotFound from './components/404'
-//import Orders from './containers/Orders'
-//import Auth from './containers/Auth'
 import Logout from './containers/Logout'
 import { Router } from '@reach/router'
 import { connect } from 'react-redux'

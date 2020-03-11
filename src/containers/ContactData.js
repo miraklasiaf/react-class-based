@@ -6,6 +6,7 @@ import Input from '../components/UI/Form/Input'
 import { connect } from 'react-redux'
 import Error from '../hoc/Error'
 import * as orderAction from '../store/actions'
+import { updateObject, checkValidity } from '../shared/utility'
 
 class ContactData extends Component {
     state = {
@@ -118,43 +119,29 @@ class ContactData extends Component {
     }
 
     handleInputChange = (event, inputIdentifier) => {
-        const newForm = { ...this.state.orderForm }
-        const newFormElement = { ...newForm[inputIdentifier] }
+        // const newForm = { ...this.state.orderForm }
+        // const newFormElement = { ...newForm[inputIdentifier] }
 
-        newFormElement.value = event.target.value;
-        newFormElement.valid = this.handleValidation(newFormElement.value, newFormElement.validation)
-        newFormElement.clicked = true
-        newForm[inputIdentifier] = newFormElement;
+        // newFormElement.value = event.target.value;
+        // newFormElement.valid = this.handleValidation(newFormElement.value, newFormElement.validation)
+        // newFormElement.clicked = true
+        // newForm[inputIdentifier] = newFormElement;
+        const newFormElement = updateObject(this.state.orderForm[inputIdentifier], {
+            value: event.target.value,
+            valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+            clicked: true
+        })
+
+        const newForm = updateObject(this.state.orderForm, {
+            [inputIdentifier]: newFormElement
+        })
 
         let formIsValid = true;
-
         for (let inputIdentifier in newForm){
             formIsValid = newForm[inputIdentifier].valid && formIsValid
         }
 
         this.setState({ orderForm: newForm, formIsValid: formIsValid })
-    }
-
-    handleValidation = (value, rules) => {
-        let isValid = true;
-
-        if(!rules){
-            return true;
-        }
-
-        if(rules.required){
-            isValid = value.trim() !== '' && isValid
-        }
-
-        if(rules.minLength){
-            isValid = value.length >= rules.minLength && isValid
-        }
-
-        if(rules.maxLength){
-            isValid = value.length <= rules.maxLength && isValid
-        }
-
-        return isValid
     }
 
     render() {

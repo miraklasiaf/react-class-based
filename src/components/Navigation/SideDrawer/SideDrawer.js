@@ -15,7 +15,7 @@ export default function SideDrawer(props) {
     return (
         <Auxiliary className="mt-16">
             <Backdrop isShow={props.open} clicked={props.closed} />
-            <div className={classes.join(' ')}>
+            <div className={classes.join(' ')} onClick={props.closed}>
                 <Logo />
                 <nav>
                     <NavItems isAuthenticated={props.isAuth} />
